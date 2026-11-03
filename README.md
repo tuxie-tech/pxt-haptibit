@@ -12,6 +12,10 @@ MakeCode extension for the DRV2605L haptic driver (ERM motor, open loop) on micr
 
 3.3 V supply, motor limited to 3.0 V.
 
+### Direct-drive boards
+
+If no DRV2605L answers on I2C, the motor is assumed to sit behind a low-side FET on P8. Effects become PWM pulse patterns, `vibrate` sets the PWM duty, and `followAudio` does nothing.
+
 ## Usage
 
 ```blocks
@@ -23,6 +27,14 @@ input.onButtonPressed(Button.B, function () {
     basic.pause(500)
     haptibit.stop()
 })
+```
+
+### Audio to vibe
+
+```blocks
+haptibit.followAudio()
+music.playTone(Note.C, music.beat())
+haptibit.stop()
 ```
 
 ## Use as extension

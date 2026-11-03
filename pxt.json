@@ -1,0 +1,20 @@
+{
+    "name": "haptibit",
+    "version": "0.0.0",
+    "description": "DRV2605L haptic driver for micro:bit",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "haptibit.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "public": true
+}

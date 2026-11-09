@@ -141,11 +141,8 @@ namespace haptibit {
         pins.digitalWritePin( EN_PIN, 1 )
         basic.pause( EN_WAKE_MS )
 
-        const nack = pins.i2cWriteNumber( I2C_ADDR, REG_STATUS, NumberFormat.UInt8BE )
-        if ( nack ) {
-            return false
-        }
-
+        // i2cWriteNumber returns void in PXT, so there is no NACK to check;
+        // an absent device reads back a value that fails the ID comparison.
         return ( read( REG_STATUS ) >> DEVICE_ID_SHIFT ) === DRV2605L_ID
     }
 

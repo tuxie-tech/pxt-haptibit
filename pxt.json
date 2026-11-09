@@ -1,6 +1,6 @@
 {
     "name": "haptibit",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "DRV2605L haptic driver for micro:bit",
     "license": "MIT",
     "dependencies": {

@@ -66,7 +66,8 @@ namespace haptibit {
     const MODE_RTP = 0x05
     const MODE_RESET = 0x80
 
-    const LIBRARY_ERM_A = 1
+    // Library B is tuned for 3 V ERMs and hits harder than A
+    const LIBRARY_ERM_B = 2
     const SEQ_END = 0
     const GO = 1
 
@@ -87,12 +88,18 @@ namespace haptibit {
     const ATH_MIN_DRIVE = 0x00
     const ATH_MAX_DRIVE = 0xFF
 
-    // Eq. 8: 21.64 mV x 152 x ( 4.8 - 0.3 ) / ( 4.8 + 0.075 + 0.075 ) = 2.99 V
-    // for DRIVE_TIME 4.8 ms and default IDISS/BLANKING times; 3.0 V motor max
-    const OD_CLAMP_3V0 = 152
+    // Open-loop drive limit. 152 gave ~3.0 V (Eq. 8); 200 is ~3.9 V, so the
+    // H-bridge is limited by the supply (~3.3 V) rather than the clamp.
+    // Lower this if the motor is rated below the supply.
+    const OD_CLAMP_MAX = 200
 
     const RTP_MAX = 255
     const PERCENT_MAX = 100
+
+    // The motor does not move below ~60% drive, so user strength 1% maps to
+    // 60% drive and 100% to 100%; 0% is off
+    const STRENGTH_MIN = 1
+    const DRIVE_MIN = 60
 
     const EN_WAKE_MS = 1
     const RESET_MS = 2
@@ -115,6 +122,7 @@ namespace haptibit {
     const ALERT_750_MS = 750
     const ALERT_1000_MS = 1000
 
+    // Effect strengths on the user scale (see STRENGTH_MIN)
     const STRENGTH_60 = 60
     const STRENGTH_30 = 30
 
@@ -166,15 +174,27 @@ namespace haptibit {
 
         write( REG_FEEDBACK, FEEDBACK_ERM )
         write( REG_CONTROL3, CONTROL3_ERM_OPEN )
-        write( REG_OD_CLAMP, OD_CLAMP_3V0 )
-        write( REG_LIBRARY, LIBRARY_ERM_A )
+        write( REG_OD_CLAMP, OD_CLAMP_MAX )
+        write( REG_LIBRARY, LIBRARY_ERM_B )
         write( REG_MODE, MODE_INTERNAL_TRIG )
 
         driver = Driver.Drv2605
     }
 
-    function setDirect( percent: number ) {
-        const duty = Math.map( Math.constrain( percent, 0, PERCENT_MAX ), 0, PERCENT_MAX, 0, ANALOG_MAX )
+    // User strength 0..100 to motor drive 0..100 (see STRENGTH_MIN)
+    function toDrive( strength: number ): number {
+        const s = Math.constrain( strength, 0, PERCENT_MAX )
+
+        if ( s <= 0 ) {
+            return 0
+        }
+
+        return Math.map( s, STRENGTH_MIN, PERCENT_MAX, DRIVE_MIN, PERCENT_MAX )
+    }
+
+    // Takes user strength 0..100
+    function setDirect( strength: number ) {
+        const duty = Math.map( toDrive( strength ), 0, PERCENT_MAX, 0, ANALOG_MAX )
         pins.analogWritePin( MOTOR_PIN, duty )
     }
 
@@ -288,7 +308,8 @@ namespace haptibit {
     }
 
     /**
-     * Vibrate continuously at a strength from 0 to 100.
+     * Vibrate continuously at a strength from 0 (off) to 100. 1 is the weakest
+     * strength that moves the motor.
      */
     //% blockId=haptibit_set_strength block="haptibit vibrate at %percent \\%"
     //% percent.min=0 percent.max=100 percent.defl=50
@@ -302,7 +323,7 @@ namespace haptibit {
             return
         }
 
-        const level = Math.map( Math.constrain( percent, 0, PERCENT_MAX ), 0, PERCENT_MAX, 0, RTP_MAX )
+        const level = Math.map( toDrive( percent ), 0, PERCENT_MAX, 0, RTP_MAX )
 
         write( REG_MODE, MODE_RTP )
         write( REG_RTP, level )

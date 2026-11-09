@@ -6,7 +6,7 @@ name: Render blocks
 
 on:
   push:
-    branches: [main, render-trial]   # temporary: re-render on this branch
+    branches: [main]
     paths:                      # only re-render when sources change...
       - '**.ts'
       - 'pxt.json'

@@ -11,7 +11,7 @@ on:
       - '**.ts'
       - 'pxt.json'
       - '.github/workflows/render-blocks.yml'
-      - '!rendered/**'          # ...and never because of our own output
+      - '!doc/renders/**'          # ...and never because of our own output
   workflow_dispatch:            # manual re-run from the Actions tab
 
 permissions:
@@ -42,10 +42,10 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          rm -rf rendered
-          cp -R "$RUNNER_TEMP/renders" rendered
+          rm -rf doc/renders
+          cp -R "$RUNNER_TEMP/renders" doc/renders
 
-          git add --all rendered
+          git add --all doc/renders
           if git diff --cached --quiet; then
             echo "Renders unchanged; nothing to commit."
             exit 0
@@ -53,7 +53,7 @@ jobs:
 
           # Three guards against a loop: GITHUB_TOKEN pushes don't trigger
           # workflows, `[skip ci]` covers PAT/app tokens, and the paths filter
-          # above ignores rendered/**.
+          # above ignores doc/renders/**.
           git commit -m "Update block renders [skip ci]"
           git pull --rebase origin "$BRANCH"   # someone may have pushed meanwhile
           git push origin "HEAD:$BRANCH"

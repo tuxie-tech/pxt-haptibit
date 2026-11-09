@@ -6,7 +6,7 @@ name: Render blocks
 
 on:
   push:
-    branches: [main, render-trial]   # render-trial is for the initial trial; remove once merged
+    branches: [main]
     paths:                      # only re-render when sources change...
       - '**.ts'
       - 'pxt.json'

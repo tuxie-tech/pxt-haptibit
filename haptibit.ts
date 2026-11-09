@@ -105,6 +105,8 @@ namespace haptibit {
     const RESET_MS = 2
     // Poll interval while waiting for a running effect to finish
     const POLL_MS = 5
+    // Quiet gap after an effect so consecutive effects feel distinct
+    const EFFECT_GAP_MS = 60
 
     // STATUS[7:5] device ID; 7 = DRV2605L
     const DEVICE_ID_SHIFT = 5
@@ -276,9 +278,14 @@ namespace haptibit {
     export function playEffect( effect: HapticEffect ) {
         begin()
 
-        // Let any running effect finish so back-to-back effects all play
-        while ( isPlaying() ) {
-            basic.pause( POLL_MS )
+        // Let any running effect finish so back-to-back effects all play,
+        // then leave a short gap so they stay distinct
+        if ( isPlaying() ) {
+            while ( isPlaying() ) {
+                basic.pause( POLL_MS )
+            }
+
+            basic.pause( EFFECT_GAP_MS )
         }
 
         if ( driver === Driver.Direct ) {
@@ -315,6 +322,12 @@ namespace haptibit {
     //% percent.min=0 percent.max=100 percent.defl=50
     //% weight=80
     export function vibrate( percent: number ) {
+        // 0 is off; take the full stop path rather than relying on a zero drive level
+        if ( percent <= 0 ) {
+            stop()
+            return
+        }
+
         begin()
 
         if ( driver === Driver.Direct ) {
@@ -342,8 +355,9 @@ namespace haptibit {
             return
         }
 
-        write( REG_GO, 0 )
+        // Zero the drive level first so the output drops before the mode changes
         write( REG_RTP, 0 )
+        write( REG_GO, 0 )
         write( REG_MODE, MODE_INTERNAL_TRIG )
     }
 

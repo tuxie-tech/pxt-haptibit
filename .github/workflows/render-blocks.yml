@@ -24,10 +24,10 @@ jobs:
   render:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Render
-        uses: tuxie-tech/gh-pxt-blocks-render@cd23d4574be0090fd67c1f3a3336fd6c0956b55e
+        uses: tuxie-tech/gh-pxt-blocks-render@4c0ccad363cf5a3e0df877fa3509389e8006b78a
         with:
           files: test.ts
           output-dir: ${{ runner.temp }}/renders      # outside the checkout

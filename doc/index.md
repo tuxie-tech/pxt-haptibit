@@ -13,11 +13,11 @@ tags:
 squareId: EOCX22XSFVYFT7RRVLUZDVOZ
 ---
 
-Introducing our buzzing new Micro:bit extension, HaptiBit, that brings tactile feedback to your Micro:bit.
+Introducing our buzzing new micro:bit extension, HaptiBit, that brings tactile feedback to your micro:bit.
 Create games and projects where everyone engages through touch. Feel the buzz when you’ve pressed a button, completed a task, or met a target.
 No need to keep your eyes glued to the screen or struggle listening for a beep in noisy environments.
 Get notified by feeling the buzz!
-Its effortlessly simple; No soldering; no fiddly wiring. Just slot HaptiBit onto your Micro:bit and you're ready to go.
+Its effortlessly simple; No soldering; no fiddly wiring. Just slot HaptiBit onto your micro:bit and you're ready to go.
 The clever little motor does all the heavy lifting and creates the tactile feedback.
 
 HaptiBit is perfect for those who prefer tactile interaction, ensuring all can participate through its inclusive design.
@@ -38,7 +38,7 @@ Solder a small (8mm diameter is ideal) vibration motor to the two `+`/`-` termin
 
 ## How it works
 
-We've wired the P8 pin on the Micro:bit to switch the motor on and off, but P8 doesn't connect to the motor directly; Micro:bit pins can't supply
+We've wired the P8 pin on the micro:bit to switch the motor on and off, but P8 doesn't connect to the motor directly; micro:bit pins can't supply
 enough current for that.
 Instead, P8 switches a small MOSFET (`Q1`) on and off, which in turn switches the motor's power.
 A small flyback diode (`D1`) protects the board from voltage spikes generated as the motor switches off.
@@ -58,6 +58,6 @@ Once it's working, try combining it with sensors (like the accelerometer or radi
 
 ## Other Expansion Boards
 
-Because we think that using _all_ the pins on the Micro:bit to drive just one motor is a bit limiting, we have included another microbit-style header on the bottom of the Hapti:bit, which allows you to plug in other expansions and use them with our board.
+Because we think that using _all_ the pins on the micro:bit to drive just one motor is a bit limiting, we have included another microbit-style header on the bottom of the Hapti:bit, which allows you to plug in other expansions and use them with our board.
 
-This breaks out all the Micro:bit pins, so should work just the same as plugging in the Micro:bit itself! Try plugging in your favourite extensions and using them together. **As long as they don't also use P8 for something it should all just work!**
+This breaks out all the micro:bit pins, so should work just the same as plugging in the micro:bit itself! Try plugging in your favourite extensions and using them together. **As long as they don't also use P8 for something it should all just work!**

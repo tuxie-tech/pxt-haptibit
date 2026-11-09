@@ -96,6 +96,8 @@ namespace haptibit {
 
     const EN_WAKE_MS = 1
     const RESET_MS = 2
+    // Poll interval while waiting for a running effect to finish
+    const POLL_MS = 5
 
     // STATUS[7:5] device ID; 7 = DRV2605L
     const DEVICE_ID_SHIFT = 5
@@ -253,6 +255,11 @@ namespace haptibit {
     //% weight=100
     export function playEffect( effect: HapticEffect ) {
         begin()
+
+        // Let any running effect finish so back-to-back effects all play
+        while ( isPlaying() ) {
+            basic.pause( POLL_MS )
+        }
 
         if ( driver === Driver.Direct ) {
             playDirect( effect )

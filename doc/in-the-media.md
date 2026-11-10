@@ -12,7 +12,6 @@ Here is some of the coverage so far. We'll add more here as it appears, includin
 ## Press coverage
 
 - [Lord Scudamore, Hereford College of Arts' Edgar Street wave](https://www.herefordtimes.com/news/education/26662129.lord-scudamore-hereford-college-arts-edgar-street-wave), The Hereford Times
-- [Pupils take centre stage in remarkable digital spectacle at Edgar Street](https://uk.news.yahoo.com/pupils-centre-stage-remarkable-digital-152716426.html), Yahoo! UK and Ireland
 - [BBC micro:bit celebrates 10 years with football ground takeover to create giant digital wave](https://the-educator.org/bbc-microbit-celebrates-10-years-with-football-ground-takeover-to-create-giant-digital-wave/), Educator Magazine
 - [200 people use pocket-sized computers to create a giant digital wave at Hereford FC](https://www.thesoutherngazette.com/breaking-news/hereford-microbit-digital-wave/), Southern Gazette
 - [200 people use pocket-sized computers to create a giant digital wave at Hereford FC](https://midlandsgazette.com/breaking-news/hereford-microbit-digital-wave/), Midlands Gazette

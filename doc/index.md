@@ -131,3 +131,7 @@ This breaks out all the micro:bit pins, so should work just the same as plugging
 ## Older versions
 
 Using a 1.0 board, which switched the motor directly from P8? See the [version 1.0 documentation](version-1.0/).
+
+## In the media
+
+HaptiBit and TuxieTech have been featured in the press. See [In the media](in-the-media/).

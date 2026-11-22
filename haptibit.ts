@@ -117,8 +117,8 @@ namespace haptibit {
     const PWM_PERIOD_US = 1000
 
     // Direct-drive effect timings (ms)
-    const CLICK_MS = 20
-    const BUMP_MS = 40
+    const CLICK_MS = 80
+    const BUMP_MS = 120
     const GAP_MS = 80
     const BUZZ_MS = 250
     const ALERT_750_MS = 750
